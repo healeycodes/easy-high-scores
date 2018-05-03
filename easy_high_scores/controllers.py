@@ -1,13 +1,14 @@
-from highscores import app
-from highscores.database import db_session as db
-from highscores.models import User, Highscore
+from easy_high_scores import app
+from easy_high_scores.database import db_session as db
+from easy_high_scores.models import User, Highscore
 from flask import request, jsonify, render_template
 import json
-import highscores.keys as keys
+import easy_high_scores.keys as keys
 import uuid
 
-
+                                                ############################
                                                 #### ROUTES/CONTROLLERS ####
+                                                ############################
 
 # home page
 @app.route('/')
@@ -56,7 +57,7 @@ def reset_user_database(private_key):
 
 # get scores
 @app.route('/api/get/<string:private_key>/')
-def simple_add_score(private_key):
+def simple_get_score(private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
         return 'No user with that ID found.', 500
@@ -129,6 +130,14 @@ def add_all_scores(public_key, request_data):
         for new_score in submitted_json:
             high = Highscore(user=public_key, uuid=uuid.uuid4().hex, name=new_score['name'], score=new_score['score'])
             scores_to_add.append(high)
+
+        # cap high score amount
+        all_scores = Highscore.query.all()
+        if len(all_scores) > 1999:
+            all_scores.sort(key=lambda k: k['score']) # sort low to high
+            for i in range(0, len(scores_to_add)):
+                db.delete(all_scores[i])
+            
         db.bulk_save_objects(scores_to_add)
         db.commit()
         return 'Success.'

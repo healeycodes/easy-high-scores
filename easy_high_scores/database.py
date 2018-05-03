@@ -15,5 +15,5 @@ def init_db():
     # they will be registered properly on the metadata.  Otherwise
     # you will have to import them first before calling init_db()
     # http://flask.pocoo.org/docs/0.12/patterns/sqlalchemy/
-    import highscores.models
+    import easy_high_scores.models
     Base.metadata.create_all(bind=engine)

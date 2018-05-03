@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from highscores.database import Base
+from easy_high_scores.database import Base
 
 class User(Base):
     __tablename__ = 'users'

@@ -1,0 +1,26 @@
+Error! Check your JSON.
+
+    POST Example:
+
+[
+    {
+        "name": "Alice",
+        "score": "123"
+    },
+    {
+        "name": "Bob",
+        "score": "345"
+    }
+]
+
+    DELETE Example:
+    (Note: Send a GET request to see your score's IDs)
+
+[
+    {
+        "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
+    },
+    {
+        "id": "a8b158c49d8a427b865fd586e5886ea0"
+    }
+]

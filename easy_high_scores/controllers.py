@@ -16,7 +16,7 @@ def hello():
     return 'Hello, World!'
 
 # create new user
-@app.route('/api/register/')
+@app.route('/api/register')
 def register():
     new_priv_key = keys.gen_priv_key()
     new_pub_key = keys.gen_pub_key(new_priv_key)
@@ -28,7 +28,7 @@ def register():
                                                 #### RESTFUL API ####
 
 # RESTful access to user's high score database
-@app.route('/api/<string:private_key>/', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/api/<string:private_key>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def restful(private_key):
 
     public_key = keys.gen_pub_key(private_key)
@@ -51,12 +51,12 @@ def reset_user_database(private_key):
     if user_check(public_key) == False:
         return 'No user with that ID found.', 500
 
-    return reset_user_database(public_key)
+    return reset_user_scores(public_key)
 
                                                 #### SIMPLE API ####
 
 # get scores
-@app.route('/api/get/<string:private_key>/')
+@app.route('/api/get/<string:private_key>')
 def simple_get_score(private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
@@ -66,7 +66,7 @@ def simple_get_score(private_key):
 
 # add scores
 # formatted as "name-score|name-score"
-@app.route('/api/add/<string:private_key>/<string:score_list>/')
+@app.route('/api/add/<string:private_key>/<string:score_list>')
 def simple_add_score(private_key, score_list):
 
     public_key = keys.gen_pub_key(private_key)
@@ -85,7 +85,7 @@ def simple_add_score(private_key, score_list):
 
 # delete scores
 # formatted as "id|id"
-@app.route('/api/delete/<string:private_key>/<string:id_list>/')
+@app.route('/api/delete/<string:private_key>/<string:id_list>')
 def simple_delete_score(private_key, id_list):
 
     public_key = keys.gen_pub_key(private_key)
@@ -131,13 +131,16 @@ def add_all_scores(public_key, request_data):
             high = Highscore(user=public_key, uuid=uuid.uuid4().hex, name=new_score['name'], score=new_score['score'])
             scores_to_add.append(high)
 
-        # cap high score amount
+        # amount of high scores is capped for each user
         all_scores = Highscore.query.all()
         if len(all_scores) > 1999:
-            all_scores.sort(key=lambda k: k['score']) # sort low to high
+            # sort low to high, scores filtered by float_from_string
+            all_scores.sort(key=lambda k: float_from_string(k['score']))
+
+            # remove the lowest scores
             for i in range(0, len(scores_to_add)):
-                db.delete(all_scores[i])
-            
+                all_scores[i].delete()
+
         db.bulk_save_objects(scores_to_add)
         db.commit()
         return 'Success.'
@@ -161,6 +164,29 @@ def reset_user_scores(public_key):
     Highscore.query.filter(Highscore.user == public_key).delete()
     db.commit()
     return 'Success.'
+
+
+                                                #### HELPER METHODS ####
+
+# get numbers and the first decimal point from mixed string
+# e.g., "1.2.ab345" returns 1.2345
+def float_from_string(string):
+    float_string = ''
+    one_dot = False
+    for i in string:
+        if i.isdigit():
+            float_string += i
+        if i == '.' and one_dot == False:
+            float_string += i
+            one_dot = True
+    
+    # handle erroneous strings
+    try:
+        float(float_from_string)
+    except:
+        return 0
+    
+    return float(float_string)
 
 
                                                 #### FLASK SHUTDOWN ####

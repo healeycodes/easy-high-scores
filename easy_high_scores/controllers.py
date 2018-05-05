@@ -23,7 +23,7 @@ def register():
     new_user = User(public_key=new_pub_key)
     db.add(new_user)
     db.commit()
-    return 'private key: {}'.format(new_priv_key)
+    return jsonify({'private key':new_priv_key})
 
                                                 #### RESTFUL API ####
 
@@ -100,6 +100,16 @@ def simple_delete_score(private_key, id_list):
         ids_to_delete.append(id_as_dict)
     
     return delete_all_scores(json.dumps(ids_to_delete))
+
+# count scores
+@app.route('/api/count/<string:private_key>')
+def count_scores(private_key):
+
+    public_key = keys.gen_pub_key(private_key)
+    if user_check(public_key) == False:
+        return 'No user with that ID found.', 500
+
+    return str(len(Highscore.query.filter(Highscore.user == public_key).all()))
     
 
                                                 #### APP LOGIC ####
@@ -131,18 +141,20 @@ def add_all_scores(public_key, request_data):
             high = Highscore(user=public_key, uuid=uuid.uuid4().hex, name=new_score['name'], score=new_score['score'])
             scores_to_add.append(high)
 
-        # amount of high scores is capped for each user
-        all_scores = Highscore.query.all()
-        if len(all_scores) > 1999:
-            # sort low to high, scores filtered by float_from_string
-            all_scores.sort(key=lambda k: float_from_string(k['score']))
-
-            # remove the lowest scores
-            for i in range(0, len(scores_to_add)):
-                all_scores[i].delete()
-
         db.bulk_save_objects(scores_to_add)
         db.commit()
+
+        # amount of high scores is capped for each user
+        all_scores = Highscore.query.filter(Highscore.user == public_key).all()
+        if len(all_scores) > 2000:
+            # sort low to high, scores filtered by float_from_string
+            all_scores.sort(key=lambda k: float_from_string(k.score))
+
+            # remove the lowest scores to keep a max of 2000
+            for i in range(0, len(all_scores) - 2000):
+                db.delete(all_scores[i])
+            db.commit()
+
         return 'Success.'
     except:
         return render_template('json_error.txt'), 500
@@ -182,7 +194,7 @@ def float_from_string(string):
     
     # handle erroneous strings
     try:
-        float(float_from_string)
+        float(float_string)
     except:
         return 0
     

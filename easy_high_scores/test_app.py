@@ -60,6 +60,21 @@ def test_add_scores(client):
     assert b'Alice' in get
     assert b'123' in get
 
+# check POSTing erroneous scores
+def test_add_erroneous_scores(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+    scores = json.dumps([{'naame':'Bob', 'score':'456'}]) # the error is on this line
+    post = client.post('/api/' + user_priv_key, data=scores,
+        content_type='application/json')
+    
+    # check response
+    assert b'Error!' in post.data
+    
+    # check if not stored
+    get = client.get('/api/' + user_priv_key).data
+    assert b'Bob' not in get
+    assert b'456' not in get
+
 # check DELETEing scores
 def test_delete_scores(client):
     user_priv_key = json.loads(client.get('/api/register').data)['private key']
@@ -87,7 +102,7 @@ def test_delete_scores(client):
     # response should be empty array
     assert b'[]' in get
 
-# test score filtering function
+# check score filtering function
 def test_score_filter():
     assert easy_high_scores.controllers.float_from_string('123') == 123
     assert easy_high_scores.controllers.float_from_string('123.1.1') == 123.11

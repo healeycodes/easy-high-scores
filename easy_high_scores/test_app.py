@@ -161,8 +161,31 @@ def test_top_x_scores(client):
 
     # get top 1 scores
     top = client.get('/api/top/1/' + user_priv_key).data
-    assert top.count(b'"123"') == 1
+    assert top.count(b'"123"') == 1 and top.count(b'"Alice"') == 1
 
     # get top 2 scores
     top = client.get('/api/top/2/' + user_priv_key).data
-    assert top.count(b'"123"') == 2
+    assert top.count(b'"123"') == 2 and top.count(b'"Alice"') == 2
+
+# check add/return scores
+def test_add_return(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+
+    # add two scores
+    many_scores = []
+    for i in range(0,2):
+        many_scores.append({'name':'Alice', 'score':'123'})
+    many_scores = json.dumps(many_scores)
+    post = client.post('/api/' + user_priv_key, data=many_scores,
+        content_type='application/json').data
+    assert b'OK' in post
+
+    # add another score with add/return
+    addreturn = client.get('/api/addreturn/' + user_priv_key + '/Chris-100', data=many_scores,
+        content_type='application/json').data
+    
+    # were the other two scores returned
+    assert addreturn.count(b'"123"') == 2 and addreturn.count(b'"Alice"') == 2
+
+    # was the new score returned as well?
+    assert addreturn.count(b'"100"') == 1 and addreturn.count(b'"Chris"') == 1

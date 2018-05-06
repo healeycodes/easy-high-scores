@@ -128,6 +128,31 @@ def top_x_scores(amount, private_key):
         score_list.append({"id":row.uuid, "name":row.name, "score":row.score})
     return jsonify(score_list)
 
+# add scores and then return all scores
+# formatted as "name-score|name-score"
+@app.route('/api/addreturn/<string:private_key>/<string:score_list>')
+def add_and_return_scores(private_key, score_list):
+
+    public_key = keys.gen_pub_key(private_key)
+    if user_check(public_key) == False:
+        return 'No user with that ID found.', 500
+
+    scores_to_add = score_list.split('|')
+    score_list = []
+    for score in scores_to_add:
+        new_score = {}
+        new_score['name'] = score[score.index('-') + 1:]
+        new_score['score'] = score[:score.index('-')]
+        score_list.append(new_score)
+    
+    # return an error if there is one
+    add_response = add_all_scores(public_key, json.dumps(score_list))
+    if add_response != 'OK':
+        return add_response
+    
+    # otherwise return all scores
+    return get_all_scores(public_key)
+
                                                 #### APP LOGIC ####
 
 # is there a user with that public key?

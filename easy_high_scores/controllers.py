@@ -110,7 +110,23 @@ def count_scores(private_key):
         return 'No user with that ID found.', 500
 
     return str(len(Highscore.query.filter(Highscore.user == public_key).all()))
-    
+
+# top x scores
+@app.route('/api/top/<int:amount>/<string:private_key>')
+def top_x_scores(amount, private_key):
+    public_key = keys.gen_pub_key(private_key)
+    if user_check(public_key) == False:
+        return 'No user with that ID found.', 500
+
+    # sort high to low, slice to get top x
+    score_rows = Highscore.query.filter(Highscore.user == public_key).all()
+    score_rows.sort(key=lambda k: float_from_string(k.score), reverse=True)
+    score_rows = score_rows[:amount]
+
+    score_list = []
+    for row in score_rows:
+        score_list.append({"id":row.uuid, "name":row.name, "score":row.score})
+    return jsonify(score_list)
 
                                                 #### APP LOGIC ####
 

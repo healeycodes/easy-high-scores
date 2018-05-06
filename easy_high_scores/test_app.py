@@ -141,3 +141,28 @@ def test_user_cap(client):
     # check that lower scores was not added
     get = client.get('/api/' + user_priv_key).data
     assert b'"1"' not in get
+
+# check top x scores
+def test_top_x_scores(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+    top = client.get('/api/top/1/' + user_priv_key).data
+
+    # response should be empty array at first
+    assert b'[]' in top
+
+    # add three scores
+    many_scores = []
+    for i in range(0,3):
+        many_scores.append({'name':'Alice', 'score':'123'})
+    many_scores = json.dumps(many_scores)
+    post = client.post('/api/' + user_priv_key, data=many_scores,
+        content_type='application/json').data
+    assert b'OK' in post
+
+    # get top 1 scores
+    top = client.get('/api/top/1/' + user_priv_key).data
+    assert top.count(b'"123"') == 1
+
+    # get top 2 scores
+    top = client.get('/api/top/2/' + user_priv_key).data
+    assert top.count(b'"123"') == 2

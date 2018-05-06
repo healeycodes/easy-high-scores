@@ -155,7 +155,7 @@ def add_all_scores(public_key, request_data):
                 db.delete(all_scores[i])
             db.commit()
 
-        return 'Success.'
+        return 'OK'
     except:
         return render_template('json_error.txt'), 500
 
@@ -167,7 +167,7 @@ def delete_all_scores(request_data):
             score_uuid = score['id']
             Highscore.query.filter(Highscore.uuid == score_uuid).delete()
         db.commit()
-        return 'Success.'
+        return 'OK'
     except:
         return render_template('json_error.txt'), 500
 
@@ -175,7 +175,7 @@ def delete_all_scores(request_data):
 def reset_user_scores(public_key):
     Highscore.query.filter(Highscore.user == public_key).delete()
     db.commit()
-    return 'Success.'
+    return 'OK'
 
 
                                                 #### HELPER METHODS ####

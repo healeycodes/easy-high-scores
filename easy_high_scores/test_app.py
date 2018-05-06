@@ -53,7 +53,7 @@ def test_add_scores(client):
         content_type='application/json')
     
     # check response
-    assert b'Success.' in post.data
+    assert b'OK' in post.data
     
     # check if stored correctly
     get = client.get('/api/' + user_priv_key).data
@@ -83,7 +83,7 @@ def test_delete_scores(client):
         content_type='application/json')
     
     # check whether we have a score to delete
-    assert b'Success.' in post.data
+    assert b'OK' in post.data
     get = client.get('/api/' + user_priv_key).data
     assert b'Alice' in get
     assert b'123' in get
@@ -95,7 +95,7 @@ def test_delete_scores(client):
     # now delete
     delete = client.delete('/api/' + user_priv_key, data=score_to_delete,
         content_type='application/json').data
-    assert b'Success.' in delete
+    assert b'OK' in delete
 
     # check that delete was successful
     get = client.get('/api/' + user_priv_key).data
@@ -121,7 +121,7 @@ def test_user_cap(client):
     many_scores = json.dumps(many_scores)
     post = client.post('/api/' + user_priv_key, data=many_scores,
         content_type='application/json').data
-    assert b'Success.' in post
+    assert b'OK' in post
     
     # check length of response (i.e., the amount of scores)
     # after adding another 2000 scores, it should remain the same
@@ -129,14 +129,14 @@ def test_user_cap(client):
     scores_length = len(client.get('/api/' + user_priv_key).data)
     post = client.post('/api/' + user_priv_key, data=many_scores,
         content_type='application/json').data
-    assert b'Success.' in post
+    assert b'OK' in post
     assert len(client.get('/api/' + user_priv_key).data) == scores_length
 
     # now try and add a lower score which should be filtered out
     lower_score = json.dumps([{'name':'Alice', 'score':'1'}])
     post = client.post('/api/' + user_priv_key, data=lower_score,
         content_type='application/json').data
-    assert b'Success.' in post
+    assert b'OK' in post
 
     # check that lower scores was not added
     get = client.get('/api/' + user_priv_key).data

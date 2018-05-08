@@ -25,8 +25,14 @@ def test_create_database():
 def test_key_gen():
     key_one = easy_high_scores.keys.gen_priv_key()
     key_two = easy_high_scores.keys.gen_priv_key()
+
+    # check length
     assert len(key_one) == 64 and len(key_two) == 64
+
+    # check for randomness
     assert key_one != key_two
+
+    # SHA256 test vector
     assert easy_high_scores.keys.gen_pub_key('') == 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 
 # check register
@@ -189,3 +195,12 @@ def test_add_return(client):
 
     # was the new score returned as well?
     assert addreturn.count(b'"100"') == 1 and addreturn.count(b'"Chris"') == 1
+
+# check get public key from private
+def test_get_public_key(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+
+    public_key = client.get('/api/public_key/' + user_priv_key).data
+
+    # is the correct public key returned for our random private key
+    assert easy_high_scores.keys.gen_pub_key(user_priv_key).encode() in public_key

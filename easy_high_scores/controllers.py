@@ -30,7 +30,6 @@ def register():
 # RESTful access to user's high score database
 @app.route('/api/<string:private_key>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def restful(private_key):
-
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
         return 'No user with that ID found.', 500
@@ -53,6 +52,15 @@ def reset_user_database(private_key):
 
     return reset_user_scores(public_key)
 
+# get user's public key
+@app.route('/api/public_key/<string:private_key>')
+def get_public_key(private_key):
+    public_key = keys.gen_pub_key(private_key)
+    if user_check(public_key) == False:
+        return 'No user with that ID found.', 500
+
+    return public_key
+
                                                 #### SIMPLE API ####
 
 # get scores
@@ -68,7 +76,6 @@ def simple_get_score(private_key):
 # formatted as "name-score|name-score"
 @app.route('/api/add/<string:private_key>/<string:score_list>')
 def simple_add_score(private_key, score_list):
-
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
         return 'No user with that ID found.', 500
@@ -87,7 +94,6 @@ def simple_add_score(private_key, score_list):
 # formatted as "id|id"
 @app.route('/api/delete/<string:private_key>/<string:id_list>')
 def simple_delete_score(private_key, id_list):
-
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
         return 'No user with that ID found.', 500
@@ -132,7 +138,6 @@ def top_x_scores(amount, private_key):
 # formatted as "name-score|name-score"
 @app.route('/api/addreturn/<string:private_key>/<string:score_list>')
 def add_and_return_scores(private_key, score_list):
-
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
         return 'No user with that ID found.', 500

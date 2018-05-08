@@ -32,7 +32,7 @@ def register():
 def restful(private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     if request.method == 'GET':
         return get_all_scores(public_key)
@@ -48,7 +48,7 @@ def restful(private_key):
 def reset_user_database(private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     return reset_user_scores(public_key)
 
@@ -57,7 +57,7 @@ def reset_user_database(private_key):
 def get_public_key(private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     return public_key
 
@@ -68,7 +68,7 @@ def get_public_key(private_key):
 def simple_get_score(private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     return get_all_scores(public_key)
 
@@ -78,7 +78,7 @@ def simple_get_score(private_key):
 def simple_add_score(private_key, score_list):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     scores_to_add = score_list.split('|')
     score_list = []
@@ -96,7 +96,7 @@ def simple_add_score(private_key, score_list):
 def simple_delete_score(private_key, id_list):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     id_list = id_list.split('|')
     ids_to_delete = []
@@ -110,10 +110,9 @@ def simple_delete_score(private_key, id_list):
 # count scores
 @app.route('/api/count/<string:private_key>')
 def count_scores(private_key):
-
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     return str(len(Highscore.query.filter(Highscore.user == public_key).all()))
 
@@ -122,7 +121,7 @@ def count_scores(private_key):
 def top_x_scores(amount, private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     # sort high to low, slice to get top x
     score_rows = Highscore.query.filter(Highscore.user == public_key).all()
@@ -140,7 +139,7 @@ def top_x_scores(amount, private_key):
 def add_and_return_scores(private_key, score_list):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:
-        return 'No user with that ID found.', 500
+        return user_not_found()
 
     scores_to_add = score_list.split('|')
     score_list = []
@@ -159,6 +158,10 @@ def add_and_return_scores(private_key, score_list):
     return get_all_scores(public_key)
 
                                                 #### APP LOGIC ####
+
+# user not found
+def user_not_found():
+    return 'No user with that ID found.', 404
 
 # is there a user with that public key?
 def user_check(public_key, private_key=None):
@@ -203,7 +206,7 @@ def add_all_scores(public_key, request_data):
 
         return 'OK'
     except:
-        return render_template('json_error.txt'), 500
+        return render_template('json_error.txt'), 400
 
 # delete all scores
 def delete_all_scores(request_data):
@@ -215,7 +218,7 @@ def delete_all_scores(request_data):
         db.commit()
         return 'OK'
     except:
-        return render_template('json_error.txt'), 500
+        return render_template('json_error.txt'), 400
 
 # reset user's score databse
 def reset_user_scores(public_key):

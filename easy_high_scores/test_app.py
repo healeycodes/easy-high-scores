@@ -43,13 +43,21 @@ def test_register(client):
     assert b'private key' in register_one
     assert len(register_one) == 88 # check byte count of response
 
+# check requesting with bad private key
+def test_bad_request(client):
+    get = client.get('/api/' + 'bad private key')
+
+    print(get.status_code)
+    assert get.status_code == 404
+
 # check GETing scores
 def test_get_scores(client):
     user_priv_key = json.loads(client.get('/api/register').data)['private key']
-    get = client.get('/api/' + user_priv_key).data
+    get = client.get('/api/' + user_priv_key)
 
     # response should be empty array
-    assert b'[]' in get
+    assert b'[]' in get.data
+    assert get.status_code == 200
 
 # check POSTing scores
 def test_add_scores(client):
@@ -73,8 +81,11 @@ def test_add_erroneous_scores(client):
     post = client.post('/api/' + user_priv_key, data=scores,
         content_type='application/json')
     
-    # check response
+    # check error message
     assert b'Error!' in post.data
+
+    # check 'bad request' status code
+    assert post.status_code == 400
     
     # check if not stored
     get = client.get('/api/' + user_priv_key).data

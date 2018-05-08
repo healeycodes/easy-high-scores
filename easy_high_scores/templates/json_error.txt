@@ -24,3 +24,13 @@ Error! Check your JSON.
         "id": "a8b158c49d8a427b865fd586e5886ea0"
     }
 ]
+
+If you're using the simple API, check your URL.
+
+    ADD Example:
+
+/api/add/Alice-123|Bob-456
+
+    DELETE Example:
+
+/api/delete/ba39c5c48b754271a9cc723e9dde401a|c3e28d9114c24a25bc749bdfd2358722

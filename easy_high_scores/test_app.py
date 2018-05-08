@@ -1,6 +1,7 @@
 import os
 import pytest
 import json
+import re
 from easy_high_scores import easy_high_scores
 
 # set up test client
@@ -59,7 +60,7 @@ def test_get_scores(client):
     assert b'[]' in get.data
     assert get.status_code == 200
 
-# check POSTing scores
+# check POSTing scores (and GETing to check they were added)
 def test_add_scores(client):
     user_priv_key = json.loads(client.get('/api/register').data)['private key']
     scores = json.dumps([{'name':'Alice', 'score':'123'}])
@@ -215,3 +216,101 @@ def test_get_public_key(client):
 
     # is the correct public key returned for our random private key
     assert easy_high_scores.keys.gen_pub_key(user_priv_key).encode() in public_key
+
+# check score count
+def test_score_count(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+
+    # check count is zero
+    first_count = client.get('/api/count/' + user_priv_key).data
+    assert b'0' in first_count 
+    
+    # add two scores
+    many_scores = []
+    for i in range(0,2):
+        many_scores.append({'name':'Alice', 'score':'123'})
+    many_scores = json.dumps(many_scores)
+    client.post('/api/' + user_priv_key, data=many_scores,
+        content_type='application/json').data
+
+    # count should now be two
+    second_count = client.get('/api/count/' + user_priv_key).data
+    assert b'2' in second_count
+
+# check score reset
+def test_score_reset(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+
+    # add two scores
+    many_scores = []
+    for i in range(0,2):
+        many_scores.append({'name':'Alice', 'score':'123'})
+    many_scores = json.dumps(many_scores)
+    client.post('/api/' + user_priv_key, data=many_scores,
+        content_type='application/json').data
+
+    # do we now have two scores?
+    count = client.get('/api/count/' + user_priv_key).data
+    assert b'2' in count 
+
+    # okay, then reset and count should be zero
+    client.get('api/reset/' + user_priv_key)
+    count = client.get('/api/count/' + user_priv_key).data
+    assert b'0' in count
+
+
+# check simple API ADD
+def test_simple_add(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+
+    # add scores
+    scores = 'Alice-123|Alice-123'
+    client.get('/api/add/' + user_priv_key + '/' + scores).data
+
+    # can we read these scores?
+    simple_get = client.get('/api/get/' + user_priv_key).data
+    assert simple_get.count(b'123') == 2 and simple_get.count(b'Alice') == 2
+
+# check simple API GET
+def test_simple_get(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+
+    # add two scores
+    many_scores = []
+    for i in range(0,2):
+        many_scores.append({'name':'Alice', 'score':'123'})
+    many_scores = json.dumps(many_scores)
+    client.post('/api/' + user_priv_key, data=many_scores,
+        content_type='application/json').data
+
+    # can we read these scores?
+    simple_get = client.get('/api/get/' + user_priv_key).data
+    assert simple_get.count(b'123') == 2 and simple_get.count(b'Alice') == 2
+
+# check simple API DELETE
+def test_simple_delete(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+
+    # add two scores
+    many_scores = []
+    for i in range(0,2):
+        many_scores.append({'name':'Alice', 'score':'123'})
+    many_scores = json.dumps(many_scores)
+    client.post('/api/' + user_priv_key, data=many_scores,
+        content_type='application/json').data
+
+    # get score UUIDs and store them in a list
+    get = client.get('/api/' + user_priv_key).data
+    clean_get = str(get).strip('<>() ').replace('\'', '\"').replace('\\n', '')[1:]
+    as_list = clean_get.split('"')
+    uuids = []
+    for i in range(0, len(as_list)):
+        if as_list[i] == 'id':
+            uuids.append(as_list[i + 2])
+    
+    # delete two scores
+    client.get('/api/delete/' + user_priv_key + '/' + uuids[0] + '|' + uuids[1])
+
+    # confirm deletion
+    count = client.get('/api/count/' + user_priv_key).data
+    assert b'0' in count

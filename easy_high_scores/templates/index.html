@@ -1,0 +1,45 @@
+{% extends "layout.html" %} {% block content %}
+<p>A JSON-based <b>RESTful API</b> for all your leaderboard needs.</p><br>
+<pre>    POST Example ({{ url_for('index') }}api/&lt;your 64-character private URL&gt;):
+
+        [
+            {
+                "name": "Alice",
+                "score": "123"
+            },
+            {
+                "name": "Bob",
+                "score": "345"
+            }
+        ]
+
+    Alternatively, use our simple API:
+
+        GET {{ url_for('index') }}api/add/&lt;your 64-character private URL&gt;/Alice-123|Bob-345</pre>
+<br><p>Lorem ipsum</p>
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <div class="control">
+                <input class="input is-danger" type="text" value="/api/">
+            </div>
+        </div>
+        <div class="column"></div>
+    </div>
+</section>
+
+<a class="button is-danger is-outlined is-large">Get Your Private URL</a>
+<pre>   [
+        {
+            "name": "Alice",
+            "score": "123",
+            "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
+        },
+        {
+            "name": "Bob",
+            "score": "345",
+            "id": "a8b158c49d8a427b865fd586e5886ea0"
+        }
+    ]</pre>
+
+{% endblock %}

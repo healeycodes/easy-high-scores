@@ -12,8 +12,8 @@ import uuid
 
 # home page
 @app.route('/')
-def hello():
-    return 'Hello, World!'
+def index():
+    return render_template('index.html')
 
 # create new user
 @app.route('/api/register')

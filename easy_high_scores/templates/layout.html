@@ -1,28 +1,74 @@
 <!DOCTYPE html>
-<html>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>easy high scores</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-<link href="https://fonts.googleapis.com/css?family=Roboto|Ubuntu|Ubuntu+Mono" rel="stylesheet">
+<html lang="en">
+
+<head>
+    <title>easy high scores</title>
+    <link rel="stylesheet" href="static/css/bulma.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
 <body>
-    <div class="columns">
-        <div class="column is-one-fifth">
+    <div class="hero-head">
+        <section class="hero is-primary is-medium" id="contact">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="header-titles">
+                        <h3 class="title is-3 is-spaced">easy high scores</h3>
+                        <h5 class="subtitle is-5 is-spaced">High scores for your app/game/website for
+                            <b>free</b>.
+                            <br>No sign-up required.</h5>
+                    </div>
+                    <div class="header-buttons">
+                        <span class="control">
+                            <a class="button is-primary" href="https://github.com/healeycodes/easy-high-scores">
+                                <span class="icon">
+                                    <i class="fa fa-github"></i>
+                                </span>
+                                <span>Github</span>
+                            </a>
+                        </span>
+                        <span class="control">
+                            <a class="button is-primary" href="https://github.com/healeycodes/easy-high-scores/issues/new">
+                                <span class="icon">
+                                    <i class="fa fa-bug"></i>
+                                </span>
+                                <span>Report Bug</span>
+                            </a>
+                        </span>
+                        <span class="control">
+                            <a class="button is-primary">
+                                <span class="icon">
+                                    <i class="fa fa-book"></i>
+                                </span>
+                                <span>Documentation</span>
+                            </a>
+                        </span>
+                        <span class="control">
+                            <a class="button is-primary">
+                                <span class="icon">
+                                    <i class="fa fa-check"></i>
+                                </span>
+                                <span>Get Started!</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% block content %} {% endblock %}
+    <div class="hero-footer footer">
+        <div class="container has-text-centered">
+            <span class="icon">
+                <i class="fa fa-github"></i>
+            </span>
+            <p>
+                <a>github.com/healeycodes</a>
+            </p>
         </div>
+    </div>
 
-        <div class="column">
-            <section>&nbsp;</section>
-            <p class="title is-1 highlight">easy high scores</p>
-            <p class="subtitle is-4">Competition is good. Add high scores to your app/game/website for
-                <b>free</b>. No sign up required.</p>
-            {% block content %} {% endblock %}
-        </div>
-
-        <div class="column is-one-fifth">
-        </div>
 </body>
 
 </html>

@@ -1,35 +1,69 @@
 {% extends "layout.html" %} {% block content %}
-<p>A JSON-based <b>RESTful API</b> for all your leaderboard needs.</p><br>
-<pre>    POST Example ({{ url_for('index') }}api/&lt;your 64-character private URL&gt;):
-
-        [
-            {
-                "name": "Alice",
-                "score": "123"
-            },
-            {
-                "name": "Bob",
-                "score": "345"
-            }
-        ]
-
-    Alternatively, use our simple API:
-
-        GET {{ url_for('index') }}api/add/&lt;your 64-character private URL&gt;/Alice-123|Bob-345</pre>
-<br><p>Lorem ipsum</p>
-<section class="section">
-    <div class="columns">
-        <div class="column">
-            <div class="control">
-                <input class="input is-danger" type="text" value="/api/">
-            </div>
-        </div>
-        <div class="column"></div>
-    </div>
-</section>
-
-<a class="button is-danger is-outlined is-large">Get Your Private URL</a>
-<pre>   [
+<div class="content-block">
+	<section class="hero">
+		<div class="hero-body">
+			<div class="container">
+				<div class="content">
+					<h4 class="title is-4">
+						<b>easy</b> to use</h4>
+					<div class="main-text">
+						<p> I like to compete in
+							<a href="https://en.wikipedia.org/wiki/Game_jam">game jams</a>. Often, I'll want to incorporate a leaderboard but the current free options are either too bloated and
+							required a lot of setup, or they're very restricted, e.g., HTTPS not allowed (which affects some web engines), or
+							the amount of scores that can be stored is severely limited. My goal with this project was to create a solution for
+							developers that is easy to use and simple to integrate.</a>
+						</p>
+						<p>
+							<ul>
+								<li>Open source</li>
+								<li>One-click instant setup</li>
+								<li>RESTful API (GET/POST/DELETE)</li>
+								<li>JSON-based, compatible with the
+									<a href="http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf">latest standard</a>
+								</li>
+								<li>An additional simple API relying solely on GET requests</li>
+								<li>Submit scores and get updated score-list with via one request</li>
+								<li>Return top x scores (sorted by numerical data, scores may contain letters)</li>
+								<li>Capped at 2000 scores per user, after which the lowest scores get bumped</li>
+							</ul>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<hr/>
+</div>
+<div class="content-block">
+	<section class="hero">
+		<div class="hero-body">
+			<div class="container">
+				<div class="content">
+					<h4 class="title is-4">
+						<b>the basics</b>
+					</h4>
+					<p><a href="{{ url_for('index') }}api/<private key>">https://easyhighscores.com/api/&lt;private key&gt;</a></p>
+					<div class="columns is-multiline">
+						<div class="column is-4">
+							<p>POST</p>
+							<div class="pre-wrapper">
+								<pre><br>    [
+        {
+            "name": "Alice",
+            "score": "123"
+        },
+        {
+            "name": "Bob",
+            "score": "345"
+        }
+    ]
+		<br><br><br></pre>
+							</div>
+						</div>
+						<div class="column is-4">
+							<p>GET</p>
+							<div class="pre-wrapper">
+								<pre><br>    [
         {
             "name": "Alice",
             "score": "123",
@@ -40,6 +74,28 @@
             "score": "345",
             "id": "a8b158c49d8a427b865fd586e5886ea0"
         }
-    ]</pre>
-
+    ]
+<br></pre>
+							</div>
+						</div>
+						<div class="column is-4">
+							<p>DELETE</p>
+							<div class="pre-wrapper">
+								<pre><br>   [
+        {
+            "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
+        },
+        {
+            "id": "a8b158c49d8a427b865fd586e5886ea0"
+        }
+    ]
+<br><br><br><br><br></pre>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
 {% endblock %}

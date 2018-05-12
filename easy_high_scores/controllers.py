@@ -1,7 +1,7 @@
 from easy_high_scores import app
 from easy_high_scores.database import db_session as db
 from easy_high_scores.models import User, Highscore
-from flask import request, jsonify, render_template, redirect
+from flask import request, jsonify, render_template, redirect, url_for
 import json
 import easy_high_scores.keys as keys
 import uuid
@@ -18,13 +18,14 @@ def index():
 # new user redirect
 @app.route('/new')
 def new_user():
-    return redirect(private_user_page, key=key)
+    private_key = json.loads(register().data)['private key']
+    return redirect(url_for('private_user_page', private_key=private_key))
 
 # private user page
 @app.route('/key/<string:private_key>')
 def private_user_page(private_key):
-    key = private_key
-    return render_template('key_page.html', key=key)
+    public_key = keys.gen_pub_key(private_key)
+    return render_template('key_page.html', private_key=private_key, public_key=public_key)
 
 # create new user
 @app.route('/api/register')
@@ -73,6 +74,14 @@ def get_public_key(private_key):
     return public_key
 
                                                 #### SIMPLE API ####
+
+# public access
+@app.route('/api/public/<string:public_key>')
+def public_get_score(public_key):
+    if user_check(public_key) == False:
+        return user_not_found()
+    
+    return get_all_scores(public_key)
 
 # get scores
 @app.route('/api/get/<string:private_key>')
@@ -172,7 +181,7 @@ def add_and_return_scores(private_key, score_list):
 
 # user not found
 def user_not_found():
-    return 'No user with that ID found.', 404
+    return 'No user with that ID found.', 401
 
 # is there a user with that public key?
 def user_check(public_key, private_key=None):

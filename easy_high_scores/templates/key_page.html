@@ -1,0 +1,205 @@
+{% extends "layout.html" %} {% block content %}
+<div class="content-block">
+	<section class="hero">
+		<div class="hero-body">
+			<div class="container">
+				<div class="content">
+					<h4 class="title is-4">
+						<b>easy</b> to interact with</h4>
+					<div class="main-text">
+						<p>This is your private user page and below is your private key. Keep this
+							<b>safe</b> and
+							<b>secret</b>. This key is used for all interactions with the easy high scores API. When running a local application,
+							you should obfuscate this key where possible. </p>
+							<p>
+									<div class="box">
+										<div class="field">
+											<p class="subtitle is-5 is-spaced">Your private key</p>
+											<div class="control">
+												<input class="input is-primary" type="text" value="{{ private_key }}" style="width: 100%">
+											</div>
+										</div>
+									</div>
+								</p>
+						<p>If your data is ill-formed, you will recieve a 400 (Bad Request) status code along with a message showing the correct
+							format. If your private key is incorrect or missing, you will recieve a 401 (Unauthorized) status code with an error
+							message. Otherwise, expect a 200 (Successful) status code with "OK" as the message.</p>
+						<p>You can share your
+							<b>public key</b> to allow read-only access to your score-list through the route below.
+							<b>This is the only thing you should share from this page</b>.</p>
+						<p>
+							<div class="box">
+								<div class="field">
+									<p class="subtitle is-5 is-spaced">Read-only access (via public key)</p>
+									<div class="control">
+										<input class="input is-primary" type="text" value="https://easyhighscores.com/api/public/{{ public_key }}" style="width: 100%">
+									</div>
+								</div>
+							</div>
+						</p>
+					</div>
+				</div>
+			</div>
+	</section>
+	<hr/>
+	</div>
+	<div class="content-block">
+		<section class="hero">
+			<div class="hero-body">
+				<div class="container">
+					<div class="content">
+						<h4 class="title is-4">
+							<b>RESTful</b> access
+						</h4>
+						<p>Here is your personal endpoint. The following code blocks also show how score data will be returned when using the simple
+							API.</p>
+						<p>
+							<div class="field">
+								<div class="control">
+									<input class="input is-primary" type="text" value="https://easyhighscores.com/api/{{ private_key }}" style="width: 800px">
+								</div>
+							</div>
+						</p>
+						<div class="columns is-multiline">
+							<div class="column is-4">
+								<div class="box">
+									<p>When
+										<b>POST</b>ing score data, it should be formed like this:</p>
+									<div class="pre-wrapper">
+										<pre><br>    [
+        {
+            "name": "Alice",
+            "score": "123"
+        },
+        {
+            "name": "Bob",
+            "score": "345"
+        }
+    ]
+<br></pre>
+									</div>
+								</div>
+							</div>
+							<div class="column is-4">
+								<div class="box">
+									<p>When
+										<b>GET</b>ing score data, it will be returned like this:</p>
+									<div class="pre-wrapper">
+										<pre><br>    [
+        {
+            "name": "Alice",
+            "score": "123",
+            "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
+        },
+        {
+            "name": "Bob",
+            "score": "345",
+            "id": "a8b158c49d8a427b865fd586e5886ea0"
+        }
+    ]
+<br></pre>
+									</div>
+								</div>
+							</div>
+							<div class="column is-4">
+								<div class="box">
+									<p>When
+										<b>DELETE</b>ing score data, it should be formed like this:</p>
+									<div class="pre-wrapper">
+										<pre><br>    [
+        {
+            "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
+        },
+        {
+            "id": "a8b158c49d8a427b865fd586e5886ea0"
+        }
+    ]
+<br></pre>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</section>
+		<hr/>
+		<div class="content-block">
+			<section class="hero">
+				<div class="hero-body">
+					<div class="container">
+						<div class="content">
+							<h4 class="title is-4">
+								<b>simple</b> API
+							</h4>
+							<p>These are all GET requests. To further explain this, imagine that your application is visiting the URL once after
+								which the data has been uploaded. You can send more than one piece of data by delimiting with the pipe symbol "|"
+								(above backslash on U.S. keyboards).</p>
+							<p>
+								<div class="box">
+									<div class="field">
+										<p class="subtitle is-5 is-spaced">Add and return updated score-list</p>
+										<div class="control">
+											<input class="input is-primary" type="text" value="https://easyhighscores.com/api/addreturn/{{ private_key }}/Alice-123|Bob-345"
+											 style="width: 100%">
+										</div>
+									</div>
+								</div>
+							</p>
+							<p>
+								<div class="box">
+									<div class="field">
+										<p class="subtitle is-5 is-spaced">Add scores</p>
+										<div class="control">
+											<input class="input is-primary" type="text" value="https://easyhighscores.com/api/add/{{ private_key }}/Alice-123|Bob-345"
+											 style="width: 100%">
+										</div>
+									</div>
+								</div>
+							</p>
+							<p>
+								<div class="box">
+									<div class="field">
+										<p class="subtitle is-5 is-spaced">Retrieve scores</p>
+										<div class="control">
+											<input class="input is-primary" type="text" value="https://easyhighscores.com/api/get/{{ private_key }}" style="width: 100%">
+										</div>
+									</div>
+								</div>
+							</p>
+							<p>
+								<div class="box">
+									<div class="field">
+										<p class="subtitle is-5 is-spaced">Delete scores</p>
+										<div class="control">
+											<input class="input is-primary" type="text" value="https://easyhighscores.com/api/delete/{{ private_key }}/ec4fea3e49ca4c229ca2d471dcdde6ac|a8b158c49d8a427b865fd586e5886ea0"
+											 style="width: 100%">
+										</div>
+									</div>
+								</div>
+							</p>
+							<p>
+								<div class="box">
+									<div class="field">
+										<p class="subtitle is-5 is-spaced">Top X scores</p>
+										<div class="control">
+											<input class="input is-primary" type="text" value="https://easyhighscores.com/api/top/{{ private_key }}/10" style="width: 100%">
+										</div>
+									</div>
+								</div>
+							</p>
+							<p>
+								<div class="box">
+									<div class="field">
+										<p class="subtitle is-5 is-spaced">Amount of scores</p>
+										<div class="control">
+											<input class="input is-primary" type="text" value="https://easyhighscores.com/api/count/{{ private_key }}" style="width: 100%">
+										</div>
+									</div>
+								</div>
+							</p>
+						</div>
+					</div>
+			</section>
+			</div>
+
+			{% endblock %}

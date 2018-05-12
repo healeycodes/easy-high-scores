@@ -2,74 +2,80 @@
 <html lang="en">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>easy high scores</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="hero-head">
-        <section class="hero is-primary is-medium" id="contact">
-            <div class="hero-body">
-                <div class="container">
-                    <div class="header-titles">
-                        <h3 class="title is-3 is-spaced">easy high scores</h3>
-                        <h5 class="subtitle is-5 is-spaced">High scores API for your app/game/website for
-                            <b>free</b>.
-                            <br>No sign-up required.</h5>
-                    </div>
-                    <div class="header-buttons">
-                        <span class="control">
-                            <a class="button is-primary" href="https://github.com/healeycodes/easy-high-scores">
-                                <span class="icon">
-                                    <i class="fas fa-code-branch"></i>
-                                </span>
-                                <span>Github</span>
-                            </a>
-                        </span>
-                        <span class="control">
-                            <a class="button is-primary" href="https://github.com/healeycodes/easy-high-scores/issues/new">
-                                <span class="icon">
-                                    <i class="fa fa-bug"></i>
-                                </span>
-                                <span>Report Bug</span>
-                            </a>
-                        </span>
-                        <span class="control">
-                            <a class="button is-primary">
-                                <span class="icon">
-                                    <i class="fa fa-book"></i>
-                                </span>
-                                <span>Documentation</span>
-                            </a>
-                        </span>
-                        <span class="control">
-                            <a class="button is-primary" href="{{ url_for('new_user') }}">
-                                <span class="icon">
-                                    <i class="fa fa-check"></i>
-                                </span>
-                                <span>Get Started!</span>
-                            </a>
-                        </span>
+    <div class="content-block">
+        <div class="hero-head">
+            <section class="hero is-primary is-medium" id="contact">
+                <div class="hero-body">
+                    <div class="container">
+                        <div class="header-titles">
+                            <h3 class="title is-3 is-spaced">
+                                <a href="/">easy high scores</a>
+                            </h3>
+                            <h5 class="subtitle is-5 is-spaced">High scores API for your app/game/website for
+                                <b>free</b>.
+                                <br>No sign-up required.</h5>
+                        </div>
+                        <div class="header-buttons">
+                            <span class="control">
+                                <a class="button is-primary" href="https://github.com/healeycodes/easy-high-scores">
+                                    <span class="icon">
+                                        <i class="fas fa-code-branch"></i>
+                                    </span>
+                                    <span>Github</span>
+                                </a>
+                            </span>
+                            <span class="control">
+                                <a class="button is-primary" href="https://github.com/healeycodes/easy-high-scores/issues/new">
+                                    <span class="icon">
+                                        <i class="fa fa-bug"></i>
+                                    </span>
+                                    <span>Report Bug</span>
+                                </a>
+                            </span>
+                            <span class="control">
+                                <a class="button is-primary">
+                                    <span class="icon">
+                                        <i class="fa fa-book"></i>
+                                    </span>
+                                    <span>Documentation</span>
+                                </a>
+                            </span>
+                            <span class="control">
+                                <a class="button is-primary" href="{{ url_for('new_user') }}">
+                                    <span class="icon">
+                                        <i class="fa fa-check"></i>
+                                    </span>
+                                    <span>Get Started!</span>
+                                </a>
+                            </span>
+                        </div>
                     </div>
                 </div>
+            </section>
+        </div>
+        {% block content %} {% endblock %}
+        <div class="hero-footer footer">
+            <div class="container has-text-centered">
+                <span class="icon">
+                    <i class="fas fa-code-branch"></i>
+                </span>
+                <p>
+                    <a>github.com/healeycodes</a>
+                </p>
             </div>
-        </section>
-    </div>
-    {% block content %} {% endblock %}
-    <div class="hero-footer footer">
-        <div class="container has-text-centered">
-            <span class="icon">
-                <i class="fas fa-code-branch"></i>
-            </span>
-            <p>
-                <a>github.com/healeycodes</a>
-            </p>
         </div>
     </div>
-
 </body>
 
 </html>

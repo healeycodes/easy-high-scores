@@ -5,10 +5,15 @@
     background-color: #00d1b2;
     border-color: #fff;
     color: #fff;
+    margin: 1px;
 }
 
 .button {
     padding: 20px;
+}
+
+.key-button {
+    padding: 10px;
 }
 
 pre {

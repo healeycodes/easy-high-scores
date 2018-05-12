@@ -49,7 +49,7 @@ def test_bad_request(client):
     get = client.get('/api/' + 'bad private key')
 
     print(get.status_code)
-    assert get.status_code == 404
+    assert get.status_code == 401
 
 # check GETing scores
 def test_get_scores(client):
@@ -314,3 +314,20 @@ def test_simple_delete(client):
     # confirm deletion
     count = client.get('/api/count/' + user_priv_key).data
     assert b'0' in count
+
+# check public read-access
+def test_public_access(client):
+    user_priv_key = json.loads(client.get('/api/register').data)['private key']
+    user_pub_key = easy_high_scores.keys.gen_pub_key(user_priv_key)
+
+    # add two scores
+    many_scores = []
+    for i in range(0,2):
+        many_scores.append({'name':'Alice', 'score':'123'})
+    many_scores = json.dumps(many_scores)
+    client.post('/api/' + user_priv_key, data=many_scores,
+        content_type='application/json').data
+
+    # can we read these scores with our public key?
+    public_get = client.get('/api/public/' + user_pub_key).data
+    assert public_get.count(b'123') == 2 and public_get.count(b'Alice') == 2

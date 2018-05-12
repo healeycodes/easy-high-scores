@@ -8,17 +8,18 @@
 						<b>easy</b> to use</h4>
 					<div class="main-text">
 						<p> I like to compete in
-							<a href="https://en.wikipedia.org/wiki/Game_jam">game jams</a> and create prototypes. Often, I'll want to add online
-							high scores to my projects but the current free solutions are either too bloated and require a lot of setup, or
-							they're very restricted, e.g., HTTPS not allowed (which affects some web engines), or the amount of scores that
-							can be stored is severely limited. My goal with this project was to create a solution for developers that is easy
-							to use and simple to integrate.</a>
+							<a href="https://en.wikipedia.org/wiki/Game_jam">game jams</a> and create prototypes. Often, I'll want to add online high scores to my projects but the current free
+							solutions are either too bloated and require a lot of setup, or they're very restricted, e.g., HTTPS not allowed (which
+							affects some web engines), or the amount of scores that can be stored is severely limited. My goal with this project
+							was to create a solution for developers that is easy to use and simple to integrate.</a>
 						</p>
 						<p>
 							<ul>
 								<li>Open source</li>
+								<li>Beginner friendly</li>
 								<li>One-click instant setup</li>
 								<li>RESTful API (GET/POST/DELETE)</li>
+								<li>A shareable public code, allowing read-only access</li>
 								<li>JSON-based, compatible with the
 									<a href="http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf">latest standard</a>
 								</li>
@@ -35,6 +36,7 @@
 	</section>
 	<hr/>
 </div>
+
 <div class="content-block">
 	<section class="hero">
 		<div class="hero-body">
@@ -43,7 +45,8 @@
 					<h4 class="title is-4">
 						<b>the basics</b>
 					</h4>
-					<p>Here are some of the most important routes. Italicized text is data sent, otherwise the code blocks show returned data. You'll want to check out the documentation for further detail such as HTTP status codes.</p>
+					<p>Here are some of the most important routes. You'll want to check out the documentation for further information such
+						as HTTP status codes.</p>
 					<div class="columns is-multiline">
 						<div class="column is-4">
 							<div class="box">
@@ -57,7 +60,7 @@
 								</p>
 
 								<div class="pre-wrapper">
-									<pre><br><i>    [
+									<pre><br>    [
         {
             "name": "Alice",
             "score": "123"
@@ -67,7 +70,7 @@
             "score": "345"
         }
     ]
-		</i><br><br><br></pre>
+		<br><br><br></pre>
 								</div>
 							</div>
 						</div>
@@ -109,7 +112,7 @@
 									<a class="small-url" href="{{ url_for('index') }}api/<private key>">/api/&lt;your private key&gt;</a>
 								</p>
 								<div class="pre-wrapper">
-									<pre><br><i>   [
+									<pre><br>   [
         {
             "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
         },
@@ -117,7 +120,7 @@
             "id": "a8b158c49d8a427b865fd586e5886ea0"
         }
     ]
-</i><br><br><br><br><br></pre>
+<br><br><br><br><br></pre>
 								</div>
 							</div>
 						</div>

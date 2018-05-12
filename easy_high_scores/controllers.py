@@ -1,7 +1,7 @@
 from easy_high_scores import app
 from easy_high_scores.database import db_session as db
 from easy_high_scores.models import User, Highscore
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, redirect
 import json
 import easy_high_scores.keys as keys
 import uuid
@@ -14,6 +14,17 @@ import uuid
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# new user redirect
+@app.route('/new')
+def new_user():
+    return redirect(private_user_page, key=key)
+
+# private user page
+@app.route('/key/<string:private_key>')
+def private_user_page(private_key):
+    key = private_key
+    return render_template('key_page.html', key=key)
 
 # create new user
 @app.route('/api/register')
@@ -117,7 +128,7 @@ def count_scores(private_key):
     return str(len(Highscore.query.filter(Highscore.user == public_key).all()))
 
 # top x scores
-@app.route('/api/top/<int:amount>/<string:private_key>')
+@app.route('/api/top/<string:private_key>/<int:amount>')
 def top_x_scores(amount, private_key):
     public_key = keys.gen_pub_key(private_key)
     if user_check(public_key) == False:

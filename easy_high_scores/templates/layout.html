@@ -3,9 +3,10 @@
 
 <head>
     <title>easy high scores</title>
-    <link rel="stylesheet" href="static/css/bulma.css">
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 
 <body>
@@ -15,7 +16,7 @@
                 <div class="container">
                     <div class="header-titles">
                         <h3 class="title is-3 is-spaced">easy high scores</h3>
-                        <h5 class="subtitle is-5 is-spaced">High scores for your app/game/website for
+                        <h5 class="subtitle is-5 is-spaced">High scores API for your app/game/website for
                             <b>free</b>.
                             <br>No sign-up required.</h5>
                     </div>
@@ -23,7 +24,7 @@
                         <span class="control">
                             <a class="button is-primary" href="https://github.com/healeycodes/easy-high-scores">
                                 <span class="icon">
-                                    <i class="fa fa-github"></i>
+                                    <i class="fas fa-code-branch"></i>
                                 </span>
                                 <span>Github</span>
                             </a>
@@ -45,7 +46,7 @@
                             </a>
                         </span>
                         <span class="control">
-                            <a class="button is-primary">
+                            <a class="button is-primary" href="{{ url_for('new_user') }}">
                                 <span class="icon">
                                     <i class="fa fa-check"></i>
                                 </span>
@@ -61,7 +62,7 @@
     <div class="hero-footer footer">
         <div class="container has-text-centered">
             <span class="icon">
-                <i class="fa fa-github"></i>
+                <i class="fas fa-code-branch"></i>
             </span>
             <p>
                 <a>github.com/healeycodes</a>

@@ -26,3 +26,11 @@ pre {
 .content .main-text p:last-child {
     padding-bottom: 30px;
 }
+
+.small-url {
+    font-size: .9em;
+}
+
+.small-p {
+    font-size: .8em;
+}

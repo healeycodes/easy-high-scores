@@ -8,10 +8,11 @@
 						<b>easy</b> to use</h4>
 					<div class="main-text">
 						<p> I like to compete in
-							<a href="https://en.wikipedia.org/wiki/Game_jam">game jams</a>. Often, I'll want to incorporate a leaderboard but the current free options are either too bloated and
-							required a lot of setup, or they're very restricted, e.g., HTTPS not allowed (which affects some web engines), or
-							the amount of scores that can be stored is severely limited. My goal with this project was to create a solution for
-							developers that is easy to use and simple to integrate.</a>
+							<a href="https://en.wikipedia.org/wiki/Game_jam">game jams</a> and create prototypes. Often, I'll want to add online
+							high scores to my projects but the current free solutions are either too bloated and require a lot of setup, or
+							they're very restricted, e.g., HTTPS not allowed (which affects some web engines), or the amount of scores that
+							can be stored is severely limited. My goal with this project was to create a solution for developers that is easy
+							to use and simple to integrate.</a>
 						</p>
 						<p>
 							<ul>
@@ -42,12 +43,21 @@
 					<h4 class="title is-4">
 						<b>the basics</b>
 					</h4>
-					<p><a href="{{ url_for('index') }}api/<private key>">https://easyhighscores.com/api/&lt;private key&gt;</a></p>
+					<p>Here are some of the most important routes. Italicized text is data sent, otherwise the code blocks show returned data. You'll want to check out the documentation for further detail such as HTTP status codes.</p>
 					<div class="columns is-multiline">
 						<div class="column is-4">
-							<p>POST</p>
-							<div class="pre-wrapper">
-								<pre><br>    [
+							<div class="box">
+								<p>
+									<h5 class="subtitle is-5 is-spaced">
+										<span class="icon">
+											<i class="fa fa-plus-square"></i>
+										</span> Add Scores</h5>
+									<span class="small-p">POST </span>
+									<a class="small-url" href="{{ url_for('index') }}api/<private key>">/api/&lt;your private key&gt;</a>
+								</p>
+
+								<div class="pre-wrapper">
+									<pre><br><i>    [
         {
             "name": "Alice",
             "score": "123"
@@ -57,13 +67,22 @@
             "score": "345"
         }
     ]
-		<br><br><br></pre>
+		</i><br><br><br></pre>
+								</div>
 							</div>
 						</div>
 						<div class="column is-4">
-							<p>GET</p>
-							<div class="pre-wrapper">
-								<pre><br>    [
+							<div class="box">
+								<p>
+									<h5 class="subtitle is-5 is-spaced">
+										<span class="icon">
+											<i class="fas fa-cloud-download-alt"></i>
+										</span> Retrieve Scores</h5>
+									<span class="small-p">GET</span>
+									<a class="small-url" href="{{ url_for('index') }}api/<private key>">/api/&lt;your private key&gt;</a>
+								</p>
+								<div class="pre-wrapper">
+									<pre><br>    [
         {
             "name": "Alice",
             "score": "123",
@@ -76,12 +95,21 @@
         }
     ]
 <br></pre>
+								</div>
 							</div>
 						</div>
 						<div class="column is-4">
-							<p>DELETE</p>
-							<div class="pre-wrapper">
-								<pre><br>   [
+							<div class="box">
+								<p>
+									<h5 class="subtitle is-5 is-spaced">
+										<span class="icon">
+											<i class="fa fa-trash"></i>
+										</span> Remove Scores</h5>
+									<span class="small-p">DELETE</span>
+									<a class="small-url" href="{{ url_for('index') }}api/<private key>">/api/&lt;your private key&gt;</a>
+								</p>
+								<div class="pre-wrapper">
+									<pre><br><i>   [
         {
             "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
         },
@@ -89,7 +117,75 @@
             "id": "a8b158c49d8a427b865fd586e5886ea0"
         }
     ]
-<br><br><br><br><br></pre>
+</i><br><br><br><br><br></pre>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="columns is-multiline">
+						<div class="column is-4">
+							<div class="box">
+								<p>
+									<h5 class="subtitle is-5 is-spaced">
+										<span class="icon">
+											<i class="fas fa-sync"></i>
+										</span> Add and Retrieve</h5>
+									<span class="small-p">GET</span>
+									<a class="small-url" href="{{ url_for('index') }}api/addreturn/<your private key>/Alice-123|Bob-345">/api/addreturn/&lt;your private key&gt;/Alice-123|Bob-345</a>
+								</p>
+								<div class="pre-wrapper">
+									<pre><br>    [
+        {
+            "name": "Alice",
+            "score": "123",
+            "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
+        },
+        {
+            "name": "Bob",
+            "score": "345",
+            "id": "a8b158c49d8a427b865fd586e5886ea0"
+        }
+    ]
+<br></pre>
+								</div>
+							</div>
+						</div>
+						<div class="column is-4">
+							<div class="box">
+								<p>
+									<h5 class="subtitle is-5 is-spaced">
+										<span class="icon">
+											<i class="fas fa-flag-checkered"></i>
+										</span> Top X Scores</h5>
+									<span class="small-p">GET</span>
+									<a class="small-url" href="{{ url_for('index') }}api/top/<private key>/1">/api/top/&lt;your private key&gt;/1</a>
+								</p>
+								<div class="pre-wrapper">
+									<pre><br>    [
+        {
+            "name": "Alice",
+            "score": "123",
+            "id": "ec4fea3e49ca4c229ca2d471dcdde6ac"
+        }
+    ]
+<br></pre>
+								</div>
+							</div>
+						</div>
+						<div class="column is-4">
+							<div class="box">
+								<p>
+									<h5 class="subtitle is-5 is-spaced">
+										<span class="icon">
+											<i class="fas fa-eraser"></i>
+										</span> Reset Score-list</h5>
+									<span class="small-p">GET</span>
+									<a class="small-url" href="{{ url_for('index') }}api/reset/<private key>">/api/reset/&lt;your private key&gt;</a>
+								</p>
+								<div class="pre-wrapper">
+									<pre>
+										<br>    OK<br>&nbsp;</pre>
+								</div>
 							</div>
 						</div>
 					</div>

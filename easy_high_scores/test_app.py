@@ -163,7 +163,7 @@ def test_user_cap(client):
 # check top x scores
 def test_top_x_scores(client):
     user_priv_key = json.loads(client.get('/api/register').data)['private key']
-    top = client.get('/api/top/1/' + user_priv_key).data
+    top = client.get('/api/top/' + user_priv_key + '/1').data
 
     # response should be empty array at first
     assert b'[]' in top
@@ -178,11 +178,11 @@ def test_top_x_scores(client):
     assert b'OK' in post
 
     # get top 1 scores
-    top = client.get('/api/top/1/' + user_priv_key).data
+    top = client.get('/api/top/' + user_priv_key + '/1').data
     assert top.count(b'"123"') == 1 and top.count(b'"Alice"') == 1
 
     # get top 2 scores
-    top = client.get('/api/top/2/' + user_priv_key).data
+    top = client.get('/api/top/' + user_priv_key + '/2').data
     assert top.count(b'"123"') == 2 and top.count(b'"Alice"') == 2
 
 # check add/return scores

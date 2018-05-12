@@ -20,7 +20,7 @@ def test_create_database():
         pass
     
     easy_high_scores.database.init_db()
-    assert os.path.isfile('data.db')
+    assert os.path.isfile('easy_high_scores/data.db')
 
 # check private and public key generation
 def test_key_gen():

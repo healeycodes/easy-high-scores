@@ -22,7 +22,7 @@
 
 ## Documention
 
-### [GitHub Wiki](https://github.com/healeycodes/easy-high-scores/wiki)
+### [GitHub Wiki](https://github.com/healeycodes/easy-high-scores/wiki/easy-high-scores-API)
 
 <br>
 

@@ -28,9 +28,11 @@
 
 ## Tech Stack
 
-### <b>Back end:</b> Python3, Flask, SQLite via SQLalchemy
-### <b>Front end:</b> HTML5, Bulma CSS-framework
-### <b>Tests:</b> PyTest
+<b>Back end:</b> Python3, Flask, SQLite via SQLalchemy
+
+<b>Front end:</b> HTML5, Bulma CSS-framework
+
+<b>Tests:</b> PyTest
 
 <br>
 
@@ -47,6 +49,8 @@ $ python .\run_prod.py
 ```
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
+
+There's also a ```run_debug.py``` script in the same directory for local debugging.
 
 <br>
 

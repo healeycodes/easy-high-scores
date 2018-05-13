@@ -15,7 +15,7 @@ def client():
 # check init_db
 def test_create_database():
     try:
-        os.remove('data.db')
+        os.remove('easy_high_scores/data.db')
     except OSError:
         pass
     

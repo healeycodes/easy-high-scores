@@ -1,11 +1,12 @@
-import secrets
+import os
 import hashlib
+import binascii
 
 #### a simple SHA256 key pair library #####
 
 # generate private key
 def gen_priv_key():
-    return secrets.token_hex(32)
+    return str(binascii.hexlify(os.urandom(32)), 'utf-8')
 
 # generate public key
 def gen_pub_key(priv_key):

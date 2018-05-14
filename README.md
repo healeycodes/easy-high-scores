@@ -39,6 +39,7 @@
 ## Build Steps
 
 ```
+$ git clone https://github.com/healeycodes/easy-high-scores
 $ pip install Flask
 $ pip install SQLAlchemy
 $ cd easy-high-scores

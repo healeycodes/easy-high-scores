@@ -28,7 +28,7 @@
 
 ## Tech Stack
 
-<b>Back end:</b> Python3, Flask, SQLite via SQLalchemy
+<b>Back end:</b> Python, Flask, SQLite via SQLalchemy
 
 <b>Front end:</b> HTML5, Bulma CSS-framework
 
@@ -37,6 +37,8 @@
 <br>
 
 ## Build Steps
+
+Note: This project uses Python3.6 because ```json.load()``` and ```json.loads()``` don't support binary input in lower versions.
 
 ```
 $ git clone https://github.com/healeycodes/easy-high-scores

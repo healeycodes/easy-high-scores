@@ -1,3 +1,2 @@
-easy_high_scores
 flask==0.12.2
 sqlalchemy==1.2.7

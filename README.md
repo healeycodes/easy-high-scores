@@ -1,5 +1,4 @@
-### easy high scores
-### [http://easyhighscores.com](http://easyhighscores.com)
+### easy high scores ~ [http://easyhighscores.com](http://easyhighscores.com)
 
 High scores API for your app/game/website for <b>free</b>. No sign-up required.
 

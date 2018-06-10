@@ -1,5 +1,7 @@
 ### easy high scores ~ [http://easyhighscores.com](http://easyhighscores.com)
 
+<br>
+
 High scores API for your app/game/website for <b>free</b>. No sign-up required.
 
 ![alt text](https://github.com/healeycodes/easy-high-scores/blob/master/easy_high_scores/static/img/basic-routes.png "Basic routes for easy high scores")

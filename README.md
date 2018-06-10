@@ -1,9 +1,8 @@
 # [http://easyhighscores.com](http://easyhighscores.com)
 
-### High scores API for your app/game/website for <b>free</b>. 
-### No sign-up required.
+High scores API for your app/game/website for <b>free</b>. No sign-up required.
 
-<br>
+![alt text](https://github.com/healeycodes/easy-high-scores/blob/master/easy_high_scores/static/img/basic-routes.png "Basic routes for easy high scores")
 
 ## Features
 
@@ -22,19 +21,15 @@
 
 ## Documention
 
-### [GitHub Wiki](https://github.com/healeycodes/easy-high-scores/wiki/easy-high-scores-API)
-
-<br>
+[GitHub Wiki](https://github.com/healeycodes/easy-high-scores/wiki/easy-high-scores-API)
 
 ## Tech Stack
 
-<b>Back end:</b> Python, Flask, SQLite via SQLalchemy
+Back end: Python, Flask, SQLite via SQLalchemy
 
-<b>Front end:</b> HTML5, Bulma CSS-framework
+Front end: HTML5, Bulma CSS-framework
 
-<b>Tests:</b> PyTest
-
-<br>
+Tests: PyTest
 
 ## Build Steps
 

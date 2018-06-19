@@ -74,6 +74,8 @@ test_app.py ...................                                          [100%]
 ========================== 19 passed in 1.60 seconds ==========================
 ```
 
+<br>
+
 ### License
 
 https://mit-license.org/

@@ -1,0 +1,12 @@
+# https://github.com/healeycodes/easy-high-scores
+
+language: python
+python:
+  - "3.7-dev"
+
+install:
+  - pip install -U pytest
+  - pip install -r requirements.txt
+
+script:
+  - pytest

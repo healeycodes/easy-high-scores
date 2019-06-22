@@ -1,4 +1,6 @@
-### easy high scores
+[![Build Status](https://travis-ci.org/healeycodes/easy-high-scores.svg?branch=master)](https://travis-ci.org/healeycodes/easy-high-scores)
+
+## easy high scores
 
 <br>
 

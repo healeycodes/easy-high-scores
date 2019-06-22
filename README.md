@@ -6,7 +6,9 @@
 
 High scores API for apps/games/websites. This was a free service I ran for a while to support game jammers :)
 
-![alt text](https://github.com/healeycodes/easy-high-scores/blob/master/easy_high_scores/static/img/basic-routes.png "Basic routes for easy high scores")
+![](https://github.com/healeycodes/easy-high-scores/blob/master/preview.png)
+
+![](https://github.com/healeycodes/easy-high-scores/blob/master/preview-routes.png)
 
 <br>
 
